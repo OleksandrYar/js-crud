@@ -2,12 +2,9 @@
   <h1 class='text-primary'>Product List</h1>
   <ul>
     {{#each products}}
-      <li>
-        <h2>{{this.name}}</h2>
-        <p>Price: {{this.price}}</p>
-        <p>Description: {{this.description}}</p>
-        <a href='/product-edit?id={{this.id}}'>Edit</a>
-      </li>
+      <div class="col-md-4">
+        {{>product-card name=this.name price=this.price description=this.description id=this.id}}
+      </div>
     {{/each}}
   </ul>
   <a href='/product-create'>Create New Product</a>
