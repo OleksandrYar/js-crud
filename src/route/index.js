@@ -49,6 +49,7 @@ class User {
   }
 }
 // ================================================================
+// ================================================================
 
 // router.get Створює нам один ентпоїнт
 
@@ -104,6 +105,106 @@ router.post('/user-update', function (req, res) {
 })
 
 // ================================================================
+// ================================================================
+class Product {
+  static #list = []
 
-// Підключаємо роутер до бек-енду
+  constructor(name, price, description) {
+    this.id = Math.floor(Math.random() * 90000) + 10000
+    this.createDate = new Date().toISOString()
+    this.name = name
+    this.price = price
+    this.description = description
+  }
+  static getList = () => this.#list
+  static add = (product) => {
+    this.#list.push(product)
+  }
+  static getById = (id) =>
+    this.#list.find((product) => product.id === id)
+  static updateById = (id, data) => {
+    const product = this.getById(id)
+    if (product) {
+      Object.assign(product, data)
+    }
+    return product
+  }
+  static deleteById = (id) => {
+    const index = this.#list.findIndex(
+      (product) => product.id === id,
+    )
+    if (index !== -1) {
+      this.#list.splice(index, 1)
+      return true
+    } else {
+      return false
+    }
+  }
+}
+// ================================================================
+// ================================================================
+
+// router.get Створює нам один ентпоїнт
+
+// ↙️ тут вводимо шлях (PATH) до сторінки
+// GET /product-create (форма створення продукту)
+router.get('/product-create', (req, res) => {
+  res.render('product-create')
+})
+
+// POST /product-create (створення продукту)
+router.post('/product-create', (req, res) => {
+  const { name, price, description } = req.body
+  const newProduct = new Product(name, price, description)
+  Product.add(newProduct)
+  res.render('alert', {
+    message: 'Product created successfully',
+    redirect: '/product-list',
+  })
+})
+router.get('/product-list', (req, res) => {
+  const products = Product.getList()
+  res.render('product-list', { products })
+})
+router.get('/product-edit', (req, res) => {
+  const { id } = req.query
+  const product = Product.getById(parseInt(id))
+  if (product) {
+    res.render('product-edit', { product })
+  } else {
+    res.render('alert', {
+      message: 'Product not found',
+      redirect: '/product-list',
+    })
+  }
+})
+router.post('/product-edit', (req, res) => {
+  const { id, name, price, description } = req.body
+  const updatedProduct = Product.updateById(parseInt(id), {
+    name,
+    price,
+    description,
+  })
+  if (updatedProduct) {
+    res.render('alert', {
+      message: 'Product updated successfully!',
+      redirect: '/product-edit',
+    })
+  }
+})
+router.get('/product-delete', (req, res) => {
+  const { id } = req.query
+  const success = Product.deleteById(parseInt(id))
+  if (success) {
+    res.render('alert', {
+      redirect: '/product-edit',
+      message: 'Product deleted successfully!',
+    })
+  } else {
+    res.render('alert', {
+      redirect: '/product-edit',
+      message: 'Product not found',
+    })
+  }
+})
 module.exports = router
