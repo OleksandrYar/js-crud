@@ -1,0 +1,30 @@
+
+<main class="main">
+    {{#with data}}
+    <form method="POST" action="/purchase-submit" class="form-card">
+{{> heading title="Your order"}}
+<ul class="cart">
+    {{#each cart}}
+    <li class="cart__item">
+        <span>{{text}}</span>
+        <span>${{price}}</span>
+    </li>
+    {{/each}}
+</ul>
+
+{{>divider}}
+
+{{> heading title="Create order"}}
+
+{{>field label="Name" name="firstname"}}
+{{>field label="Lastname" name="lastname"}}
+{{>field label="Telephone" name="phone"}}
+{{>field label="Email" name="email"}}
+{{>field label="Comment" name="comment"}}
+{{>field label="Bonus" name="bonus"}}
+{{>field label="Promo-code" name="promocode"}}
+
+{{>divider}}
+    </form>
+{{/with}}
+</main>

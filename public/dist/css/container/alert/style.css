@@ -1,0 +1,49 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  height: 95px;
+  gap: 20px;
+}
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.card__subtitle {
+  margin: 4px 0 0 0;
+  font-size: 16px;
+  color: #777;
+}
+
+.card__button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.card-button:hover {
+  background-color: #1276e0;
+}
+
+/*# sourceMappingURL=style.css.map */
